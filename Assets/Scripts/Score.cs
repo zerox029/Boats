@@ -5,13 +5,27 @@ using UnityEngine;
 public class Score : MonoBehaviour {
 
     public GameObject boat;
+    public PlayerMovement movement;
+
+    [SerializeField]
+    private int score;
+    private bool isOverObstacle = false;
 
 	// Update is called once per frame
 	void Update () {
-        SendRaycast();
+        if(!isOverObstacle)
+        {
+            isOverObstacle = SendRaycast();
+        }
+
+        if (movement.IsGrounded())
+        {
+            isOverObstacle = false;
+        }
+
 	}
 
-    private void SendRaycast()
+    private bool SendRaycast()
     {
         Ray ray = new Ray(boat.transform.position, -Vector3.up);
         RaycastHit hit;
@@ -21,7 +35,12 @@ public class Score : MonoBehaviour {
 
         if(hit.transform.tag == "Obstacle")
         {
-            Debug.Log("+1 Point");
+            score++;
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }

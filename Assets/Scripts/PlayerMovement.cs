@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// Returns a bool to check whether ot not the player is touching the ground
     /// </summary>
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         return Physics.Raycast(transform.position, -Vector3.up, 0.1f);
     }
