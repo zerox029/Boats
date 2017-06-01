@@ -41,7 +41,19 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -Vector3.up, 0.1f);
+        Ray ray = new Ray(transform.position, -Vector3.up);
+        RaycastHit hit;
+
+        Physics.Raycast(ray, out hit, 0.1f);
+
+        if(hit.collider != null && hit.collider.tag == "Ground")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /// <summary>

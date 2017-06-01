@@ -1,10 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Score : MonoBehaviour {
 
     public GameObject boat;
+    public Text scoreTxt;
+
+    [Space(15)]
     public PlayerMovement movement;
 
     [SerializeField]
@@ -33,14 +35,20 @@ public class Score : MonoBehaviour {
         Physics.Raycast(ray, out hit);
         Debug.DrawRay(boat.transform.position, -Vector3.up * 10, Color.red);
 
-        if(hit.transform.tag == "Obstacle")
+        if(hit.collider != null && hit.transform.tag == "Obstacle")
         {
-            score++;
+            UpdateScore();
             return true;
         }
         else
         {
             return false;
         }
+    }
+
+    private void UpdateScore()
+    {
+        score++;
+        scoreTxt.text = score.ToString();
     }
 }
