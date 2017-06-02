@@ -65,12 +65,13 @@ public class PlayerMovement : MonoBehaviour
         {
             if (jumpAmount == 0)
             {
+                rb.velocity = new Vector3(0f, 0f, 0f);
                 rb.AddForce(transform.up * thrust);
                 jumpAmount++;
             }
             else
             {
-                rb.velocity = new Vector3(rb.velocity.x, 0f, 0f);
+                rb.velocity = new Vector3(0f, 0f, 0f);
                 rb.AddForce(transform.up * thrust);
                 jumpAmount++;
             }
