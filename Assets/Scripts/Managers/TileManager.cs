@@ -9,7 +9,7 @@ public class TileManager : MonoBehaviour {
     private GameObject player;
     private List<GameObject> tilesOnScreen;
 
-    public GameObject terrain;
+    public GameObject _Dynamic;
     public float tileLength;
     public int startingTiles;
 
@@ -23,10 +23,14 @@ public class TileManager : MonoBehaviour {
         firstTilePos = new Vector3(0, 0);
 
         //Add the first tile
+        InstanciateTile(0, tileNumber);
+        tileNumber++;
+        startingTiles--;
 
-        for(int i = 0; i<startingTiles; i++)
+        //Add the rest of the starting tiles
+        for(int i = 0; i < startingTiles; i++)
         {
-            InstanciateTile(Random.Range(0, tiles.Length), tileNumber);
+            InstanciateTile(Random.Range(1, tiles.Length), tileNumber);
             tileNumber++;
         }
     }
@@ -35,15 +39,18 @@ public class TileManager : MonoBehaviour {
     {
         if (player.transform.position.x >= ((tilePos.x + firstTilePos.x)/2))
         {
-            InstanciateTile(Random.Range(0, tiles.Length), tileNumber);
+            InstanciateTile(Random.Range(1, tiles.Length), tileNumber);
             tileNumber++;
         }
     }
 
+    /// <summary>
+    /// Instanciates tile with index number "tileId" at the position of "tileNumber"
+    /// </summary>
     private void InstanciateTile(int tileId, int tileNumber)
     {
         tilePos = new Vector3(tileLength * tileNumber, 0f);
-        GameObject tile = Instantiate(tiles[tileId], tilePos, Quaternion.identity, terrain.transform);
+        GameObject tile = Instantiate(tiles[tileId], tilePos, Quaternion.identity, _Dynamic.transform);
         tilesOnScreen.Add(tile);
 
         if (tilesOnScreen.Count > 10)
@@ -52,6 +59,9 @@ public class TileManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Deletes the first tile contained in the tiles array
+    /// </summary>
     private void DeleteFirstTile()
     {
         Destroy(tilesOnScreen[0]);
