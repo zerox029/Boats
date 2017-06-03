@@ -22,9 +22,11 @@ public class TileManager : MonoBehaviour {
         tilesOnScreen = new List<GameObject>();
         firstTilePos = new Vector3(0, 0);
 
+        //Add the first tile
+
         for(int i = 0; i<startingTiles; i++)
         {
-            InstanciateTile(1, tileNumber);
+            InstanciateTile(Random.Range(0, tiles.Length), tileNumber);
             tileNumber++;
         }
     }
@@ -33,7 +35,7 @@ public class TileManager : MonoBehaviour {
     {
         if (player.transform.position.x >= ((tilePos.x + firstTilePos.x)/2))
         {
-            InstanciateTile(1, tileNumber);
+            InstanciateTile(Random.Range(0, tiles.Length), tileNumber);
             tileNumber++;
         }
     }
@@ -41,7 +43,7 @@ public class TileManager : MonoBehaviour {
     private void InstanciateTile(int tileId, int tileNumber)
     {
         tilePos = new Vector3(tileLength * tileNumber, 0f);
-        GameObject tile = Instantiate(tiles[0], tilePos, Quaternion.identity, terrain.transform);
+        GameObject tile = Instantiate(tiles[tileId], tilePos, Quaternion.identity, terrain.transform);
         tilesOnScreen.Add(tile);
 
         if (tilesOnScreen.Count > 10)
